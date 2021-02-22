@@ -17,58 +17,60 @@ export async function getStaticProps({
   const config = getConfig({ locale })
 
   // Get Featured Products
-  const { products: featuredProducts } = await getAllProducts({
+  const { products: featured } = await getAllProducts({
     variables: { field: 'featuredProducts', first: 6 },
     config,
     preview,
   })
 
   // Get Best Selling Products
-  const { products: bestSellingProducts } = await getAllProducts({
+  const { products: bestSelling } = await getAllProducts({
     variables: { field: 'bestSellingProducts', first: 6 },
     config,
     preview,
   })
 
   // Get Best Newest Products
-  const { products: newestProducts } = await getAllProducts({
-    variables: { field: 'newestProducts', first: 12 },
-    config,
-    preview,
-  })
+  // const { products: newestProducts } = await getAllProducts({
+  //   variables: { field: 'newestProducts', first: 12 },
+  //   config,
+  //   preview,
+  // })
 
   const { categories, brands } = await getSiteInfo({ config, preview })
   const { pages } = await getAllPages({ config, preview })
 
   // These are the products that are going to be displayed in the landing.
   // We prefer to do the computation at buildtime/servertime
-  const { featured, bestSelling } = (() => {
-    // Create a copy of products that we can mutate
-    // Filter products that do not have images
-    const products = [...newestProducts]
-    // If the lists of featured and best selling products don't have enough
-    // products, then fill them with products from the products list, this
-    // is useful for new commerce sites that don't have a lot of products
-    return {
-      featured: rangeMap(6, (i) => featuredProducts[i] ?? products.shift())
-        .filter(nonNullable)
-        .sort((a, b) => a.node.prices.price.value - b.node.prices.price.value)
-        .reverse(),
-      bestSelling: rangeMap(
-        6,
-        (i) => bestSellingProducts[i] ?? products.shift()
-      ).filter(nonNullable),
-    }
-  })()
+  // const { featured, bestSelling } = (() => {
+  // const { featured } = (() => {
+  //   // Create a copy of products that we can mutate
+  //   // Filter products that do not have images
+  //   // const products = [...newestProducts]
+
+  //   // If the lists of featured and best selling products don't have enough
+  //   // products, then fill them with products from the products list, this
+  //   // is useful for new commerce sites that don't have a lot of products
+  //   return {
+  //     featured: rangeMap(6, (i) => featuredProducts[i] ?? [])
+  //       .filter(nonNullable)
+  //       .sort((a, b) => a.node.prices.price.value - b.node.prices.price.value)
+  //       .reverse(),
+  //     // bestSelling: rangeMap(
+  //     //   6,
+  //     //   (i) => bestSellingProducts[i] ?? products.shift()
+  //     // ).filter(nonNullable),
+  //   }
+  // })()
 
   return {
     props: {
       featured,
       bestSelling,
-      newestProducts,
+      // newestProducts,
       categories,
       brands,
-      pages,
+      // pages,
     },
     revalidate: 14400,
   }
@@ -81,11 +83,11 @@ export default function Home({
   bestSelling,
   brands,
   categories,
-  newestProducts,
+  // newestProducts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <Grid>
+      {/* <Grid>
         {featured.slice(0, 3).map(({ node }, i) => (
           <ProductCard
             key={node.path}
@@ -96,7 +98,7 @@ export default function Home({
             imgLoading="eager"
           />
         ))}
-      </Grid>
+      </Grid> */}
       <Marquee variant="secondary">
         {bestSelling.slice(3, 6).map(({ node }) => (
           <ProductCard
@@ -119,7 +121,7 @@ export default function Home({
         Hebrew. It’s now undergone a name change, and will be referred to as
         ‘Natural’."
       />
-      <Grid layout="B">
+      {/* <Grid layout="B">
         {featured.slice(3, 6).map(({ node }, i) => (
           <ProductCard
             key={node.path}
@@ -128,8 +130,8 @@ export default function Home({
             imgHeight={i === 1 ? 1080 : 540}
           />
         ))}
-      </Grid>
-      <Marquee>
+      </Grid> */}
+      {/* <Marquee>
         {bestSelling.slice(0, 3).map(({ node }) => (
           <ProductCard
             key={node.path}
@@ -140,12 +142,12 @@ export default function Home({
             imgLayout="fixed"
           />
         ))}
-      </Marquee>
-      <HomeAllProductsGrid
+      </Marquee> */}
+      {/* <HomeAllProductsGrid
         categories={categories}
         brands={brands}
         newestProducts={newestProducts}
-      />
+      /> */}
     </div>
   )
 }

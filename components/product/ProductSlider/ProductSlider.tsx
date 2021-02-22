@@ -40,8 +40,9 @@ const ProductSlider: FC = ({ children }) => {
       .addEventListener('touchstart', preventNavigation)
 
     return () => {
-      sliderContainerRef.current!
-      .removeEventListener('touchstart', preventNavigation)
+      if (sliderContainerRef.current) 
+        sliderContainerRef.current!
+        .removeEventListener('touchstart', preventNavigation)
     }
   }, [])
 

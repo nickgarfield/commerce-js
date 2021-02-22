@@ -1,22 +1,23 @@
 import { FC, useState } from 'react'
 import cn from 'classnames'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 
 import s from './ProductView.module.css'
-import { useUI } from '@components/ui/context'
+// import { useUI } from '@components/ui/context'
 import { Swatch, ProductSlider } from '@components/product'
 import { Button, Container, Text } from '@components/ui'
 
 import usePrice from '@framework/use-price'
 import useAddItem from '@framework/cart/use-add-item'
+import useReplaceCartItems from '@framework/cart/use-replace-cart-items'
 import type { ProductNode } from '@framework/api/operations/get-product'
 import {
   getCurrentVariant,
   getProductOptions,
   SelectedOptions,
 } from '../helpers'
-import WishlistButton from '@components/wishlist/WishlistButton'
 
 interface Props {
   className?: string
@@ -25,13 +26,15 @@ interface Props {
 }
 
 const ProductView: FC<Props> = ({ product }) => {
+  const router = useRouter()
   const addItem = useAddItem()
+  const replaceCartItems = useReplaceCartItems()
   const { price } = usePrice({
     amount: product.prices?.price?.value,
     baseAmount: product.prices?.retailPrice?.value,
     currencyCode: product.prices?.price?.currencyCode!,
   })
-  const { openSidebar } = useUI()
+  // const { openSidebar } = useUI()
   const options = getProductOptions(product)
   const [loading, setLoading] = useState(false)
   const [choices, setChoices] = useState<SelectedOptions>({
@@ -40,14 +43,29 @@ const ProductView: FC<Props> = ({ product }) => {
   })
   const variant = getCurrentVariant(product, choices)
 
-  const addToCart = async () => {
+  // const addToCart = async () => {
+  //   setLoading(true)
+  //   try {
+  //     await addItem({
+  //       productId: product.entityId,
+  //       variantId: variant?.node.entityId!,
+  //     })
+  //     openSidebar()
+  //     setLoading(false)
+  //   } catch (err) {
+  //     setLoading(false)
+  //   }
+  // }
+
+  const buyNow = async () => {
     setLoading(true)
     try {
-      await addItem({
+      await replaceCartItems({
         productId: product.entityId,
         variantId: variant?.node.entityId!,
       })
-      openSidebar()
+      router.push('/checkout')
+      // openSidebar()
       setLoading(false)
     } catch (err) {
       setLoading(false)
@@ -138,25 +156,21 @@ const ProductView: FC<Props> = ({ product }) => {
               <Text html={product.description} />
             </div>
           </section>
+
           <div>
             <Button
-              aria-label="Add to Cart"
+              aria-label="Buy Now"
               type="button"
               className={s.button}
-              onClick={addToCart}
+              onClick={buyNow}
               loading={loading}
               disabled={!variant}
             >
-              Add to Cart
+              Buy Now
             </Button>
           </div>
-        </div>
 
-        <WishlistButton
-          className={s.wishlistButton}
-          productId={product.entityId}
-          variant={variant!}
-        />
+        </div>
       </div>
     </Container>
   )

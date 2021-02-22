@@ -31,7 +31,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
                 <span className="rounded-full border border-gray-700 mr-2">
                   <Logo />
                 </span>
-                <span>ACME</span>
+                <span>DROPS</span>
               </a>
             </Link>
           </div>
@@ -82,7 +82,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
               ))}
             </ul>
           </div>
-          <div className="col-span-1 lg:col-span-6 flex items-start lg:justify-end text-primary">
+          {/* <div className="col-span-1 lg:col-span-6 flex items-start lg:justify-end text-primary">
             <div className="flex space-x-6 items-center h-10">
               <a
                 aria-label="Github Repository"
@@ -93,9 +93,9 @@ const Footer: FC<Props> = ({ className, pages }) => {
               </a>
               <I18nWidget />
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="py-12 flex flex-col md:flex-row justify-between items-center space-y-4">
+        {/* <div className="py-12 flex flex-col md:flex-row justify-between items-center space-y-4">
           <div>
             <span>&copy; 2020 ACME, Inc. All rights reserved.</span>
           </div>
@@ -114,7 +114,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
               />
             </a>
           </div>
-        </div>
+        </div> */}
       </Container>
     </footer>
   )

@@ -21,12 +21,12 @@ const STORE_API_TOKEN = process.env.BIGCOMMERCE_STORE_API_TOKEN
 const STORE_API_CLIENT_ID = process.env.BIGCOMMERCE_STORE_API_CLIENT_ID
 const STORE_CHANNEL_ID = process.env.BIGCOMMERCE_CHANNEL_ID
 
-console.log('API_URL: ' + API_URL)
-console.log('API_TOKEN: ' + API_TOKEN)
-console.log('STORE_API_URL: ' + STORE_API_URL)
-console.log('STORE_API_TOKEN: ' + STORE_API_TOKEN)
-console.log('STORE_API_CLIENT_ID: ' + STORE_API_CLIENT_ID)
-console.log('STORE_CHANNEL_ID: ' + STORE_CHANNEL_ID)
+// console.log('API_URL: ' + API_URL)
+// console.log('API_TOKEN: ' + API_TOKEN)
+// console.log('STORE_API_URL: ' + STORE_API_URL)
+// console.log('STORE_API_TOKEN: ' + STORE_API_TOKEN)
+// console.log('STORE_API_CLIENT_ID: ' + STORE_API_CLIENT_ID)
+// console.log('STORE_CHANNEL_ID: ' + STORE_CHANNEL_ID)
 
 if (!API_URL) {
   throw new Error(
